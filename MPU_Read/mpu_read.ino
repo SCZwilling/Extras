@@ -4,6 +4,8 @@
 #include <NTPClient.h>
 #include <WiFiUdp.h>
 
+#include <WiFi.h>
+
 #define DEBUG 1
 
 #if DEBUG == 1
@@ -15,25 +17,33 @@
 #define SERIAL_PRINT(X)
 #define SERIAL_PRINT_LN(X)
 #endif
+// const char* ssid = "NCAIR IOT";
+// const char* password = "Asim@123Tewari";
+
 
 const char* ssid = "admin_ncair";
 const char* password = "Admin@123Ncair";
 
-// Define Client
-WiFiUDP ntpUDP;
 WiFiClient client;
 HTTPClient http;
+// Define NTP Client to get time
+WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "pool.ntp.org", 0, 60000);
-
-// Variables
+// Variables to save date and time
 String formattedDate;
-uint8_t currentMotorStatus;
-String macAddress;
+
+// const char* macAddress = "00:1A:1B:1C:1D:1E"; //- pump1
+// const char* macAddress = "00:4A:4B:4C:4D:4E"; //- blower-2
+// const char* macAddress = "00:3A:3B:3C:3D:3E"; //- pump2
+// const char* macAddress = "00:2A:2B:2C:2D:2E"; //- blower1
 
 const char* serverName = "https://twin.zwillinglabs.io/api/iot/data";  // FastAPI server
 const int ctAnalogPin = 34;
 const int csPin = 5;  // Chip Select Pin
 bool useSPI = true;   // SPI use flag
+
+MPU9250_WE myMPU9250 = MPU9250_WE(&SPI, csPin, useSPI);
+
 const int sendDataTimerMS = 300000;
 const int numSamples = 2000;
 const int numValues = 7;
@@ -41,12 +51,18 @@ const int batchSize = 400;  // Number of samples per batch
 int ctThreshold = 50;                 // Example threshold value (adjust based on your setup)
 const int ctNumSamples = 100;           // Number of samples to take for RMS calculation
 unsigned long ctSampleInterval = 500;  // Time interval for sampling (in microseconds)
+uint8_t currentMotorStatus;
 uint8_t previousMotorStatus = 2; // Initialize to a value that is neither 0 nor 1
-unsigned long sdPreviousMillis = 0;
-int16_t accelGyroData[numSamples * numValues];  // Store raw values as 16-bit integers
-int sampleCurrent[ctNumSamples];  // Declare array to store samples
+// unsigned long batchId = 1;  // Start batch ID from 1 and increment sequentially
 
-MPU9250_WE myMPU9250 = MPU9250_WE(&SPI, csPin, useSPI);
+int16_t accelGyroData[numSamples * numValues];  // Store raw values as 16-bit integers
+// int16_t sampleCurrent[100];  // Store raw values as 16-bit integers
+int sampleCurrent[ctNumSamples];  // Declare array to store samples
+String macAddress;
+// bool initialReadingTaken = false;
+
+// Timers
+unsigned long sdPreviousMillis = 0;
 
 void connectToWiFi() {
   if (WiFi.status() != WL_CONNECTED) {
@@ -178,12 +194,24 @@ void mpuData() {
       // xyzFloat mag = myMPU9250.getMagValues();  // Read magnetometer data
 
       accelGyroData[dataIndex++] = accel.x;
+      SERIAL_PRINT("ax: ");
+      SERIAL_PRINT(accelGyroData[dataIndex]);
       accelGyroData[dataIndex++] = accel.y;
+      SERIAL_PRINT(" ay: ");
+      SERIAL_PRINT(accelGyroData[dataIndex]);
       accelGyroData[dataIndex++] = accel.z;
+      SERIAL_PRINT(" az: ");
+      SERIAL_PRINT(accelGyroData[dataIndex]);
       accelGyroData[dataIndex++] = gyro.x;
+      SERIAL_PRINT(" gx: ");
+      SERIAL_PRINT(accelGyroData[dataIndex]);
       accelGyroData[dataIndex++] = gyro.y;
+      SERIAL_PRINT(" gy: ");
+      SERIAL_PRINT(accelGyroData[dataIndex]);
       accelGyroData[dataIndex++] = gyro.z;
-      accelGyroData[dataIndex++] = analogRead(ctAnalogPin);
+      SERIAL_PRINT(" gz: ");
+      SERIAL_PRINT_LN(accelGyroData[dataIndex]);
+      accelGyroData[dataIndex++] = analogRead(ctAnalogPin)*3.3/4095;
 
       // accelGyroData[dataIndex++] = mag.x;
       // accelGyroData[dataIndex++] = mag.y;
@@ -192,6 +220,20 @@ void mpuData() {
   }
   SERIAL_PRINT_LN("Data Collected");
   // batchId++;
+}
+
+float calculateRMS(int pin, int samples, unsigned long interval) {
+  unsigned long sumSquares = 0; // Use unsigned long to avoid overflow
+
+  for (int i = 0; i < samples; i++) {
+    int rawValue = analogRead(pin); // Read the raw analog value
+    sumSquares += (unsigned long)rawValue * rawValue; // Square the raw value and add to the sum
+    delayMicroseconds(interval); // Wait for the next sample
+  }
+
+  float meanSquare = (float)sumSquares / samples; // Calculate the mean of the squares
+  float rmsValue = sqrt(meanSquare); // Take the square root to get RMS
+  return rmsValue;
 }
 
 float calculateRMS_New(int pin, int samples, unsigned long interval) {

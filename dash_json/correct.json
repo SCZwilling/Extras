@@ -1,0 +1,1795 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "iit_bombay_ncair_tsdb",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 0,
+    "id": 35,
+    "iteration": 1737717211192,
+    "links": [],
+    "orgId": 31,
+    "panels": [
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "light-red",
+                    "index": 0,
+                    "text": "Off"
+                  },
+                  "1": {
+                    "color": "light-yellow",
+                    "index": 1,
+                    "text": "Interrupted"
+                  },
+                  "2": {
+                    "color": "light-orange",
+                    "index": 2,
+                    "text": "Stopped"
+                  },
+                  "3": {
+                    "color": "light-blue",
+                    "index": 3,
+                    "text": "In Progress"
+                  },
+                  "4": {
+                    "color": "light-purple",
+                    "index": 4,
+                    "text": "Waiting"
+                  },
+                  "5": {
+                    "color": "dark-red",
+                    "index": 5,
+                    "text": "Aborted"
+                  }
+                },
+                "type": "value"
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 3,
+          "x": 0,
+          "y": 0
+        },
+        "id": 24,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "/^program_status$/",
+            "values": true
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "-- Select current_program_name as value from dmg_data WHERE machine_id = '$machine_id' and $__timeFilter(time)  ORDER BY time DESC;\r\nSelect\r\n  program_status::text\r\nfrom\r\n  dmg_data\r\nwhere\r\n  machine_id = '$machine_id'\r\n  and $__timeFilter(time)\r\norder by\r\n  time desc\r\nlimit 1;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Current State",
+        "type": "stat"
+      },
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "minutes"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 3,
+          "x": 3,
+          "y": 0
+        },
+        "id": 1,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "Select\r\n  start_up as value\r\nfrom\r\n  dmg_data\r\nWHERE\r\n  machine_id = '$machine_id' and $__timeFilter(time) \r\nORDER BY\r\n  time DESC\r\nLIMIT\r\n  1;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Start Time",
+        "type": "stat"
+      },
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 3,
+          "x": 6,
+          "y": 0
+        },
+        "id": 2,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "Select\r\n  total_number as value\r\nfrom\r\n  dmg_data\r\nWHERE\r\n  machine_id = '$machine_id' and $__timeFilter(time)\r\nORDER BY\r\n  time DESC\r\nLIMIT\r\n  1;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Total Workpiece",
+        "type": "stat"
+      },
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "description": "Per Day Workpieces Machined",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "max": 6000,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "green",
+                  "value": 50
+                }
+              ]
+            },
+            "unit": "WP/Day"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 3,
+          "x": 9,
+          "y": 0
+        },
+        "id": 19,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "/^value$/",
+            "values": true
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "Select\r\n  total_number*60*60*24/total_cutting_time as value\r\nfrom\r\n  dmg_data\r\nwhere\r\n  machine_id = '$machine_id'\r\n  and $__timeFilter(time)\r\norder by\r\n  time desc\r\nlimit\r\n  1;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Production Rate",
+        "type": "stat"
+      },
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "max": 6000,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "green",
+                  "value": 50
+                }
+              ]
+            },
+            "unit": "percent"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 3,
+          "x": 12,
+          "y": 0
+        },
+        "id": 20,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "/^value$/",
+            "values": true
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "Select\r\n  case when start_up = 0 then 0 else current_run_time*100/(start_up*60) end as value\r\nfrom\r\n  dmg_data\r\nwhere\r\n  machine_id = '$machine_id'\r\n  and $__timeFilter(time)\r\norder by\r\n  time desc\r\nlimit\r\n  1;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "% Current Machine Utilization",
+        "type": "stat"
+      },
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "s"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 3,
+          "x": 15,
+          "y": 0
+        },
+        "id": 5,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": true
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "Select\r\n  total_cutting_time as value\r\nfrom\r\n  dmg_data\r\nWHERE\r\n  machine_id = '$machine_id' and $__timeFilter(time)\r\nORDER BY\r\n  time DESC\r\nLIMIT\r\n  1;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Total Cutting Time",
+        "type": "stat"
+      },
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "s"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 3,
+          "x": 18,
+          "y": 0
+        },
+        "id": 4,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "Select\r\n  current_run_time as value\r\nfrom\r\n  dmg_data\r\nWHERE\r\n  machine_id = '$machine_id' and $__timeFilter(time)\r\nORDER BY\r\n  time DESC\r\nLIMIT\r\n  1;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Current Run Time",
+        "type": "stat"
+      },
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "s"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 3,
+          "x": 21,
+          "y": 0
+        },
+        "id": 3,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": true
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "Select\r\n  current_cycle as value\r\nfrom\r\n  dmg_data\r\nWHERE\r\n  machine_id = '$machine_id' and $__timeFilter(time)\r\nORDER BY\r\n  time DESC\r\nLIMIT\r\n  1;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Current Cycle",
+        "type": "stat"
+      },
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "green",
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "s"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 4,
+          "w": 4,
+          "x": 0,
+          "y": 3
+        },
+        "id": 23,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "/.*/",
+            "values": true
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "SELECT sum(EXTRACT(EPOCH FROM delta_T)) as total_on_time\r\nfrom(\r\nSELECT\r\n  on_segment,\r\n  MAX(time) - MIN(time) AS delta_T\r\nFROM\r\n  (\r\n    SELECT\r\n      time,\r\n      SUM(on_id) OVER (\r\n        ORDER BY\r\n          time\r\n      ) AS on_segment\r\n    FROM\r\n      (\r\n        SELECT\r\n          time,\r\n          CASE\r\n            WHEN machine_status = 'on'\r\n            AND LAG(machine_status) OVER (\r\n              ORDER BY\r\n                time\r\n            ) != 'on' THEN 1\r\n            ELSE 0\r\n          END AS on_id\r\n        FROM\r\n          dmg_data\r\n        where\r\n          machine_id = '$machine_id'\r\n          and $__timeFilter(time)\r\n      )\r\n  )\r\nGROUP BY\r\n  on_segment\r\n  );\r\n-- SELECT \r\n--   time,\r\n--   on_segment,\r\n--   off_segment,\r\n--   machine_status\r\n--   -- MAX(time) - MIN(time) AS delta_T\r\n-- FROM(\r\n--   SELECT\r\n--     time,\r\n--     machine_status,\r\n--     SUM(off_id) OVER (\r\n--       ORDER BY\r\n--         time\r\n--     ) AS off_segment,\r\n--     SUM(on_id) OVER (\r\n--       ORDER BY\r\n--         time\r\n--     ) AS on_segment\r\n--   FROM\r\n--     (\r\n--       SELECT\r\n--         time,\r\n--         machine_status,\r\n--         CASE\r\n--           WHEN machine_status = 'off'\r\n--           AND LAG(machine_status) OVER (\r\n--             ORDER BY\r\n--               time\r\n--           ) != 'off' THEN 1\r\n--           ELSE 0\r\n--         END AS off_id,\r\n--         CASE\r\n--           WHEN machine_status = 'on'\r\n--           AND LAG(machine_status) OVER (\r\n--             ORDER BY\r\n--               time\r\n--           ) != 'on' THEN 1\r\n--           ELSE 0\r\n--         END AS on_id\r\n--       FROM\r\n--         dmg_data\r\n--       where machine_id = '$machine_id' and $__timeFilter(time)\r\n--     )\r\n--   )\r\n-- -- where on_segment > 0 and off_segment > 0\r\n-- ;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Machine On Time",
+        "type": "stat"
+      },
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "light-green",
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "tool_radius"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Tool Radius"
+                },
+                {
+                  "id": "unit",
+                  "value": "lengthmm"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "tool_length"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Tool Length"
+                },
+                {
+                  "id": "unit",
+                  "value": "lengthmm"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 5,
+          "x": 4,
+          "y": 3
+        },
+        "id": 21,
+        "options": {
+          "colorMode": "background_solid",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "horizontal",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "/.*/",
+            "values": true
+          },
+          "showPercentChange": false,
+          "text": {
+            "titleSize": 14,
+            "valueSize": 14
+          },
+          "textMode": "value_and_name",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "Select\r\n  tool_name,\r\n  tool_radius,\r\n  tool_length\r\nfrom\r\n  dmg_data\r\nwhere\r\n  machine_id = '$machine_id'\r\n  and $__timeFilter(time)\r\norder by\r\n  time desc\r\nlimit\r\n  1;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Tool Info",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "name": "IoT_TwinMakerWorkspace",
+          "type": "grafana-iot-twinmaker-datasource",
+          "uid": "ee2cwfc8543k0e"
+        },
+        "gridPos": {
+          "h": 14,
+          "w": 7,
+          "x": 9,
+          "y": 3
+        },
+        "id": 22,
+        "options": {
+          "datasource": "ee2cwfc8543k0e",
+          "enableAutoQuery": false,
+          "queryRefreshInterval": 5,
+          "sceneId": "DMG1"
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-iot-twinmaker-datasource",
+              "uid": "ee2cwfc8543k0e"
+            },
+            "queryType": "GetAlarms",
+            "refId": "A"
+          }
+        ],
+        "title": "DMG_Mori",
+        "type": "grafana-iot-twinmaker-sceneviewer-panel"
+      },
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "fillOpacity": 70,
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": 60000,
+              "lineWidth": 0,
+              "spanNulls": false
+            },
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "light-red",
+                    "index": 0,
+                    "text": "Off"
+                  },
+                  "1": {
+                    "color": "light-yellow",
+                    "index": 1,
+                    "text": "Interrupted"
+                  },
+                  "2": {
+                    "color": "light-orange",
+                    "index": 2,
+                    "text": "Stopped"
+                  },
+                  "3": {
+                    "color": "light-blue",
+                    "index": 3,
+                    "text": "In Progress"
+                  },
+                  "4": {
+                    "color": "light-purple",
+                    "index": 4,
+                    "text": "Waiting"
+                  },
+                  "5": {
+                    "color": "dark-red",
+                    "index": 5,
+                    "text": "Aborted"
+                  }
+                },
+                "type": "value"
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 8,
+          "x": 16,
+          "y": 3
+        },
+        "id": 18,
+        "options": {
+          "alignValue": "center",
+          "legend": {
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "mergeValues": true,
+          "rowHeight": 0.9,
+          "showValue": "auto",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "-- Select current_program_name as value from dmg_data WHERE machine_id = '$machine_id' and $__timeFilter(time)  ORDER BY time DESC;\r\nSelect\r\n  time,\r\n  program_status::text\r\nfrom\r\n  dmg_data\r\nwhere\r\n  machine_id = '$machine_id'\r\n  and $__timeFilter(time)\r\norder by\r\n  time;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Machine Timeline",
+        "type": "state-timeline"
+      },
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 4,
+          "w": 4,
+          "x": 0,
+          "y": 7
+        },
+        "id": 6,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "/^current_program_name$/",
+            "values": true
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "-- Select current_program_name as value from dmg_data WHERE machine_id = '$machine_id' and $__timeFilter(time)  ORDER BY time DESC;\r\nSelect\r\n  current_program_name\r\nfrom\r\n  dmg_data\r\nwhere\r\n  machine_id = '$machine_id'\r\n  and $__timeFilter(time)\r\norder by\r\n  time desc\r\nlimit\r\n  1;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Current Program Name",
+        "type": "stat"
+      },
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "light-green",
+              "mode": "thresholds"
+            },
+            "decimals": 2,
+            "mappings": [],
+            "noValue": "0",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 10
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 5,
+          "x": 4,
+          "y": 9
+        },
+        "id": 11,
+        "options": {
+          "displayMode": "basic",
+          "maxVizHeight": 300,
+          "minVizHeight": 16,
+          "minVizWidth": 8,
+          "namePlacement": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": true
+          },
+          "showUnfilled": true,
+          "sizing": "auto",
+          "valueMode": "text"
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "Select\r\n  driveload_x, driveload_y, driveload_z, driveload_c, driveload_a\r\nfrom\r\n  dmg_data\r\nwhere\r\n  machine_id = '$machine_id'\r\n  and $__timeFilter(time)\r\norder by\r\n  time desc\r\nlimit\r\n  1;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Axis Load",
+        "type": "bargauge"
+      },
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "barWidthFactor": 0.6,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "decimals": 2,
+            "mappings": [],
+            "noValue": "0",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 10
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 16,
+          "y": 9
+        },
+        "id": 13,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "Select\r\n  time, spindle_load\r\nfrom\r\n  dmg_data\r\nwhere\r\n  machine_id = '$machine_id'\r\n  and $__timeFilter(time)\r\norder by\r\n  time;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Spindle Load",
+        "type": "timeseries"
+      },
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "max": 6000,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 5000
+                }
+              ]
+            },
+            "unit": "rotrpm"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 0,
+          "y": 11
+        },
+        "id": 14,
+        "options": {
+          "minVizHeight": 75,
+          "minVizWidth": 75,
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "/^spindle_speed$/",
+            "values": true
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true,
+          "sizing": "auto"
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "Select\r\n  spindle_speed\r\nfrom\r\n  dmg_data\r\nwhere\r\n  machine_id = '$machine_id'\r\n  and $__timeFilter(time)\r\norder by\r\n  time desc\r\nlimit\r\n  1;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Spindle Speed",
+        "type": "gauge"
+      },
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "percent"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 0,
+          "y": 17
+        },
+        "id": 15,
+        "options": {
+          "minVizHeight": 75,
+          "minVizWidth": 75,
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "/^spindle_override$/",
+            "values": true
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true,
+          "sizing": "auto"
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "Select\r\n  spindle_override\r\nfrom\r\n  dmg_data\r\nwhere\r\n  machine_id = '$machine_id'\r\n  and $__timeFilter(time)\r\norder by\r\n  time desc\r\nlimit\r\n  1;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Spindle Override",
+        "type": "gauge"
+      },
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "noValue": "No Content",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 7,
+          "x": 4,
+          "y": 17
+        },
+        "id": 7,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "/^current_program_content$/",
+            "values": true
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "-- Select current_program_name as value from dmg_data WHERE machine_id = '$machine_id' and $__timeFilter(time)  ORDER BY time DESC;\r\nSelect\r\n  current_program_content\r\nfrom\r\n  dmg_data\r\nwhere\r\n  machine_id = '$machine_id'\r\n  and $__timeFilter(time)\r\norder by\r\n  time desc\r\nlimit\r\n  1;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Current Program Content",
+        "type": "stat"
+      },
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "light-blue",
+              "mode": "fixed"
+            },
+            "decimals": 2,
+            "mappings": [],
+            "noValue": "0",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 5,
+          "x": 11,
+          "y": 17
+        },
+        "id": 10,
+        "options": {
+          "colorMode": "background_solid",
+          "graphMode": "area",
+          "justifyMode": "center",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "/.*/",
+            "values": true
+          },
+          "showPercentChange": false,
+          "textMode": "value_and_name",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "Select\r\n  x_axis_coordinate as X_axis,\r\n  y_axis_coordinate as Y_axis,\r\n  z_axis_coordinate as Z_axis,\r\n  a_axis_coordinate as A_axis,\r\n  c_axis_coordinate as C_axis\r\nfrom\r\n  dmg_data\r\nwhere\r\n  machine_id = '$machine_id'\r\n  and $__timeFilter(time)\r\norder by\r\n  time desc\r\nlimit\r\n  1;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Coordinates",
+        "type": "stat"
+      },
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "max": 1000,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 800
+                }
+              ]
+            },
+            "unit": "mm/min"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 16,
+          "y": 17
+        },
+        "id": 16,
+        "options": {
+          "minVizHeight": 75,
+          "minVizWidth": 75,
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "/^spindle_feed$/",
+            "values": true
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true,
+          "sizing": "auto"
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "Select\r\n  spindle_feed\r\nfrom\r\n  dmg_data\r\nwhere\r\n  machine_id = '$machine_id'\r\n  and $__timeFilter(time)\r\norder by\r\n  time desc\r\nlimit\r\n  1;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Feed Rate",
+        "type": "gauge"
+      },
+      {
+        "datasource": "iit_bombay_ncair_tsdb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "percent"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 20,
+          "y": 17
+        },
+        "id": 17,
+        "options": {
+          "minVizHeight": 75,
+          "minVizWidth": 75,
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "/^feed_override$/",
+            "values": true
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true,
+          "sizing": "auto"
+        },
+        "pluginVersion": "11.2.1",
+        "targets": [
+          {
+            
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "Select\r\n  feed_override\r\nfrom\r\n  dmg_data\r\nwhere\r\n  machine_id = '$machine_id'\r\n  and $__timeFilter(time)\r\norder by\r\n  time desc\r\nlimit\r\n  1;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Feed Override",
+        "type": "gauge"
+      }
+    ],
+    "refresh": "5s",
+    "schemaVersion": 27,
+    "style": "dark",
+    "tags": [
+      "default"
+    ],
+    "templating": {
+      "list": [
+        {
+          "description": null,
+          "error": null,
+          "hide": 2,
+          "label": null,
+          "name": "machine_id",
+          "query": "20",
+          "skipUrlSync": false,
+          "type": "constant"
+        },
+        {
+          "description": null,
+          "error": null,
+          "hide": 2,
+          "label": null,
+          "name": "shopfloor_id",
+          "query": "28",
+          "skipUrlSync": false,
+          "type": "constant"
+        },
+        {
+          "description": null,
+          "error": null,
+          "hide": 2,
+          "label": null,
+          "name": "shopfloor_room_id",
+          "query": "31",
+          "skipUrlSync": false,
+          "type": "constant"
+        },
+        {
+          "description": null,
+          "error": null,
+          "hide": 2,
+          "label": null,
+          "name": "plant_id",
+          "query": "26",
+          "skipUrlSync": false,
+          "type": "constant"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-5m",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "DMG Mori-1",
+    "type": "Machine",
+    "uid": "iZgdi5dNk",
+    "version": 2
+  }
